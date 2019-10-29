@@ -30,7 +30,7 @@ class TechList extends Component {
           {this.state.techs.map(tech => (
             <li key={tech}>
               {tech}
-              <button onClick={() => this.handleDelete(techs)} type="button">
+              <button onClick={() => this.handleDelete(tech)} type="button">
                 Remover
               </button>
             </li>
