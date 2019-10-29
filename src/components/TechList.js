@@ -4,8 +4,22 @@ import TechItem from "./TechItem";
 class TechList extends Component {
   state = {
     newTech: "",
-    techs: ["NodeJS", "ReactJS", "React Native"]
+    techs: []
   };
+
+  componentDidMount() {
+    const techs = localStorage.getItem("techs");
+
+    if (techs) {
+      this.setState({ techs: JSON.parse(techs) });
+    }
+  }
+
+  componentDidUpdate(_, prevState) {
+    if (prevState.techs !== this.state.techs) {
+      localStorage.setItem("techs", JSON.stringify(this.state.techs));
+    }
+  }
 
   handleInputChange = e => {
     this.setState({ newTech: e.target.value });
@@ -14,10 +28,12 @@ class TechList extends Component {
   handleSubmit = e => {
     e.preventDefault();
 
-    this.setState({
-      techs: [...this.state.techs, this.state.newTech],
-      newTech: ""
-    });
+    if (this.state.newTech !== "") {
+      this.setState({
+        techs: [...this.state.techs, this.state.newTech],
+        newTech: ""
+      });
+    }
   };
 
   handleDelete = tech => {
